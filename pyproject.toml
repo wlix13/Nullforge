@@ -13,7 +13,10 @@ classifiers = [
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.13",
 ]
-dependencies = [  ]
+dependencies = [
+  "pydantic",
+  "pyinfra",
+]
 
 [dependency-groups]
 dev = [ "pre-commit", "ruff" ]
@@ -29,3 +32,6 @@ line-length = 120
 
 lint.select = [ "E", "F", "I", "N", "S", "UP", "W", "YTT" ]
 lint.isort.lines-after-imports = 2
+ignore = [
+  "S108", # Probable insecure usage of temporary file or directory
+]
