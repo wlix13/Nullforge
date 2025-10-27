@@ -1,0 +1,25 @@
+[Unit]
+Description=Cloudflare Warp Tunnel (Masque)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=cloudflare
+Group=cloudflare
+Type=simple
+
+ExecStart=/usr/local/bin/usque nativetun -c {{ CONFIG_PATH }} -n {{ INET_NAME }} {% if ENABLE_IPV6 %}--ipv6{% else %}--no-tunnel-ipv6{% endif %}
+{% if ENABLE_IPV6 %}
+ExecStartPost={{ WORKDIR }}/warp-v6-policy.sh up {{ INET_NAME }} {{ CONFIG_PATH }}
+ExecStopPost={{ WORKDIR }}/warp-v6-policy.sh down {{ INET_NAME }} {{ CONFIG_PATH }}
+{% endif %}
+
+AmbientCapabilities=CAP_NET_ADMIN
+
+StandardOutput=journal
+StandardError=journal
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
