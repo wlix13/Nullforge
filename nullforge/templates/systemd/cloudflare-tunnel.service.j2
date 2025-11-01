@@ -1,0 +1,23 @@
+[Unit]
+Description=Cloudflare Zero Trust Tunnel
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=cloudflare
+Group=cloudflare
+Type=simple
+
+ExecStart=/usr/bin/cloudflared --config {{ CONFIG_PATH }} tunnel run
+
+AmbientCapabilities=CAP_NET_ADMIN
+ExecStartPost={{ WORKDIR }}/zt-tunnel-warp.sh up
+ExecStopPost={{ WORKDIR }}/zt-tunnel-warp.sh down
+
+StandardOutput=journal
+StandardError=journal
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

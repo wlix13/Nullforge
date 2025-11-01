@@ -1,0 +1,14 @@
+[Unit]
+Description=Cloudflare WARP Tunnel health check
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart={{ HEALTH_CHECK_SCRIPT }} {{ IFACE }} {{ SERVICE_NAME }}
+User=cloudflare
+Group=cloudflare
+Nice=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,26 @@
+export ZSH="{{ home }}/.oh-my-zsh"
+ZSH_THEME=""
+
+plugins=(
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    docker
+)
+
+source $ZSH/oh-my-zsh.sh
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+eval "$(direnv hook zsh)"
+
+# Aliases
+alias tailf='tail -f'
+alias cd='z'
+alias top='btop'
+alias bat='batcat --style=plain'
+alias ls='eza'
+alias vim='nvim'

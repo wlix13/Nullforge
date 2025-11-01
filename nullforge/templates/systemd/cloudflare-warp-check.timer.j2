@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Cloudflare WARP Tunnel health check every 5 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+Unit={{ SERVICE_NAME }}-check.service
+
+[Install]
+WantedBy=timers.target
